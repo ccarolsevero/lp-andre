@@ -2,30 +2,64 @@ import styled from 'styled-components';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-const sectionVariants = {
+const fadeVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({
+  visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.25 + 0.2,
+      delay,
       duration: 0.7,
       ease: [0.4, 0.2, 0.2, 1],
     },
   }),
 };
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 800);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 export default function Jobs() {
+  const isMobile = useIsMobile();
+  const flowItems = [
+    '7+ years of experience developing high traffic web applications',
+    'Proficiency with docker and kubernetes',
+    'Experience writing unit tests',
+    'Familiarity with at least one backend development language, like Java or PHP',
+    'Strong skills with React',
+  ];
+
+  const motionProps = (delay) =>
+    !isMobile
+      ? {
+          initial: 'hidden',
+          whileInView: 'visible',
+          viewport: { once: true, amount: 0.5 },
+          variants: fadeVariants,
+          custom: delay,
+        }
+      : {
+          initial: 'hidden',
+          animate: 'visible',
+          variants: fadeVariants,
+          custom: delay,
+        };
+
   return (
     <PageContainer>
-      <Navbar />
-      <motion.div
-        custom={0}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
+      <motion.div {...motionProps(0.1)}>
+        <Navbar />
+      </motion.div>
+      <motion.div {...motionProps(0.4)}>
         <Section>
           <Title>Fullstack Software Engineer</Title>
           <Description>
@@ -35,39 +69,25 @@ export default function Jobs() {
           </Description>
         </Section>
       </motion.div>
-      <motion.div
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
+      <motion.div {...motionProps(0.7)}>
         <FlowchartSection>
           <FlowchartTitle>What we’re looking for:</FlowchartTitle>
           <FlowchartList>
-            <FlowchartItem>
-              7+ years of experience developing high traffic web applications{' '}
-            </FlowchartItem>
-            <FlowchartItem>
-              Proficiency with docker and kubernetes
-            </FlowchartItem>
-            <FlowchartItem>Experience writing unit tests</FlowchartItem>
-            <FlowchartItem>
-              Familiarity with at least one backend development language, like
-              Java or PHP
-            </FlowchartItem>
-            <FlowchartItem>Strong skills with React</FlowchartItem>
+            {flowItems.map((item, idx) => (
+              <motion.li
+                {...motionProps(1.0 + idx * 0.18)}
+                key={item}
+                style={{ listStyle: 'none' }}
+              >
+                <FlowchartItem>{item}</FlowchartItem>
+              </motion.li>
+            ))}
           </FlowchartList>
         </FlowchartSection>
       </motion.div>
-      <motion.div
-        custom={2}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
+      <motion.div {...motionProps(1.5)}>
         <Section2>
           <Section2Title>Why us?</Section2Title>
-
           <JobDescription>
             We believe that we can change the world by tackling difficult
             problems, and we’ll learn a lot during the process. We value
@@ -76,12 +96,7 @@ export default function Jobs() {
           </JobDescription>
         </Section2>
       </motion.div>
-      <motion.div
-        custom={3}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
+      <motion.div {...motionProps(1.8)}>
         <Footer />
       </motion.div>
     </PageContainer>
@@ -92,6 +107,7 @@ const PageContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #111;
 `;
 
 const Section = styled.section`

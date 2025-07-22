@@ -7,7 +7,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <NavBarContainer>
+    <NavBarContainer $open={open}>
       <LogoArea as={Link} to="/">
         LOGO
       </LogoArea>
@@ -23,7 +23,7 @@ export default function Navbar() {
         <FaBars size={28} />
       </MenuIconArea>
       {open && (
-        <DropdownMenu>
+        <DropdownMenu $open={open}>
           <MenuItem as={Link} to="/about" onClick={() => setOpen(false)}>
             About Us
           </MenuItem>
@@ -49,12 +49,38 @@ const NavBarContainer = styled.nav`
   left: 0;
   width: 100%;
   z-index: 1000;
+  transition: height 0.3s;
+  @media (max-width: 600px) {
+    padding: 0 4px;
+  }
+  @media (max-width: 500px) {
+    max-width: 100vw;
+    width: 100vw;
+    overflow-x: hidden;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    height: 48px;
+  }
 `;
 
 const LogoArea = styled.div`
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  @media (max-width: 500px) {
+    position: static;
+    left: unset;
+    transform: none;
+    margin: 0;
+    margin-left: 8px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const MenuIconArea = styled.div`
@@ -62,8 +88,22 @@ const MenuIconArea = styled.div`
   align-items: center;
   color: #fff;
   cursor: pointer;
+  margin-left: auto;
+  padding: 4px;
+  height: 48px;
   @media (min-width: 601px) {
     display: none;
+  }
+  @media (max-width: 500px) {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    margin-left: 0;
+    margin-right: 8px;
+    padding: 6px;
+    height: 48px;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -97,7 +137,7 @@ const MenuItemLink = styled.a`
 const DropdownMenu = styled.div`
   position: absolute;
   top: 48px;
-  right: 16px;
+  right: 8px;
   background: #222;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
@@ -105,6 +145,20 @@ const DropdownMenu = styled.div`
   flex-direction: column;
   min-width: 120px;
   z-index: 100;
+  padding: 8px 0;
+  @media (max-width: 500px) {
+    position: fixed;
+    top: 48px;
+    right: 8px;
+    left: unset;
+    width: 180px;
+    min-width: 120px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    background: #232222;
+    margin-top: 0;
+    padding: 12px 0;
+  }
 `;
 
 const MenuItem = styled.div`

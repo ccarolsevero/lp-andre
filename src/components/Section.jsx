@@ -1,21 +1,57 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export default function Section() {
+const items = [
+  { type: 'title', content: 'Machine Learning Made Easy' },
+  {
+    type: 'desc',
+    content:
+      'Quickly generate, deploy and integrate custom machine learning AI models trained on your data.',
+  },
+  { type: 'button', content: 'JOIN WAITLIST' },
+  { type: 'subtitle', content: 'What we do:' },
+  {
+    type: 'desc2',
+    content:
+      'We found out that training and deploying custom machine learning models that fit your necessities is difficult, so we automated it for you. Unleash the hidden power of your data.',
+  },
+];
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.2 + i * 0.18,
+      duration: 0.7,
+      ease: [0.4, 0.2, 0.2, 1],
+    },
+  }),
+};
+
+export default function Section({ onAnimationComplete }) {
   return (
     <SectionContainer>
       <Content>
-        <Title>Machine Learning Made Easy</Title>
-        <Description>
-          Quickly generate, deploy and integrate custom machine learning AI
-          models trained on your data.
-        </Description>
-        <JoinButton>JOIN WAITLIST</JoinButton>
-        <Subtitle>What we do:</Subtitle>
-        <Description>
-          We found out that training and deploying custom machine learning
-          models that fit your necessities is difficult, so we automated it for
-          you. Unleash the hidden power of your data.
-        </Description>
+        {items.map((item, idx) => (
+          <motion.div
+            key={idx}
+            initial="hidden"
+            animate="visible"
+            variants={itemVariants}
+            custom={idx}
+            onAnimationComplete={
+              idx === items.length - 1 ? onAnimationComplete : undefined
+            }
+          >
+            {item.type === 'title' && <Title>{item.content}</Title>}
+            {item.type === 'desc' && <Description>{item.content}</Description>}
+            {item.type === 'button' && <JoinButton>{item.content}</JoinButton>}
+            {item.type === 'subtitle' && <Subtitle>{item.content}</Subtitle>}
+            {item.type === 'desc2' && <Description>{item.content}</Description>}
+          </motion.div>
+        ))}
       </Content>
     </SectionContainer>
   );
@@ -38,12 +74,21 @@ const SectionContainer = styled.section`
     padding-top: 64px;
     padding-bottom: 64px;
   }
+  @media (max-width: 500px) {
+    padding: 16px 2vw 16px 2vw;
+    margin-top: 24px;
+  }
 `;
 
 const Content = styled.div`
   width: 100%;
   max-width: 700px;
   text-align: center;
+  @media (max-width: 500px) {
+    max-width: 100vw;
+    width: 100vw;
+    overflow-x: hidden;
+  }
 `;
 
 const Title = styled.h1`
@@ -66,6 +111,10 @@ const Title = styled.h1`
   @media (min-width: 800px) {
     font-size: 2.6rem;
   }
+  @media (max-width: 500px) {
+    font-size: 1.5rem;
+    margin-top: 24px;
+  }
 `;
 
 const Subtitle = styled.h2`
@@ -84,6 +133,11 @@ const Description = styled.p`
   margin-bottom: 16px;
   @media (min-width: 800px) {
     font-size: 1.25rem;
+  }
+  @media (max-width: 500px) {
+    max-width: 98vw;
+    overflow-x: hidden;
+    word-break: break-word;
   }
 `;
 

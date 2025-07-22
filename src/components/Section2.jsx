@@ -1,16 +1,47 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
+const items = [
+  { type: 'title', content: 'Leverage your data for high impact AI Projects' },
+  {
+    type: 'desc',
+    content: `Data is the most valuable asset companies have, but only if it's put to use. Create real impact AI projects with your own data, integrated with your own product.`,
+  },
+];
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.2 + i * 0.18,
+      duration: 0.7,
+      ease: [0.4, 0.2, 0.2, 1],
+    },
+  }),
+};
 
 export default function Section2() {
   return (
     <Section2Container>
-      <Section2Title>
-        Leverage your data for high impact AI Projects
-      </Section2Title>
-      <Section2Description>
-        Data is the most valuable asset companies have, but only if it's put to
-        use. Create real impact AI projects with your own data, integrated with
-        your own product.
-      </Section2Description>
+      {items.map((item, idx) => (
+        <motion.div
+          key={idx}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={itemVariants}
+          custom={idx}
+        >
+          {item.type === 'title' && (
+            <Section2Title>{item.content}</Section2Title>
+          )}
+          {item.type === 'desc' && (
+            <Section2Description>{item.content}</Section2Description>
+          )}
+        </motion.div>
+      ))}
     </Section2Container>
   );
 }

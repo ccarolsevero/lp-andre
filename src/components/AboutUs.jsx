@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({
+  visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.25 + 0.2,
+      delay,
       duration: 0.7,
       ease: [0.4, 0.2, 0.2, 1],
     },
@@ -20,30 +20,30 @@ export default function AboutUs() {
   return (
     <PageContainer>
       <Navbar />
-      <motion.div
-        custom={0}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
-        <Content>
+      <Content>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          custom={0.2}
+        >
           <Title>About Us</Title>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          custom={0.6}
+        >
           <Description>
             With a very talented team with a long track of successful projects
             delivered across multiple industries, we believe we can change the
             AI landscape by providing powerful tools to enable companies to
             enter the AI era with truly impactful projects.
           </Description>
-        </Content>
-      </motion.div>
-      <motion.div
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        variants={sectionVariants}
-      >
-        <Footer />
-      </motion.div>
+        </motion.div>
+      </Content>
+      <Footer />
     </PageContainer>
   );
 }
@@ -62,7 +62,7 @@ const Content = styled.div`
   justify-content: center;
   background: #111;
   padding: 32px 8px 32px 8px;
-  min-height: calc(100vh - 96px);
+  min-height: calc(100vh - 48px); /* 48px = altura do Footer */
   box-sizing: border-box;
 `;
 
