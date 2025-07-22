@@ -1,45 +1,89 @@
 import styled from 'styled-components';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.25 + 0.2,
+      duration: 0.7,
+      ease: [0.4, 0.2, 0.2, 1],
+    },
+  }),
+};
 
 export default function Jobs() {
   return (
     <PageContainer>
       <Navbar />
-      <Section>
-        <Title>Fullstack Software Engineer</Title>
-        <Description>
-          We’re looking for an experienced jack-of-all-trades, comfortable with
-          backend and frontend development, and willing to be part of an A+ team
-          for whom software engineering is an art form.
-        </Description>
-      </Section>
-      <FlowchartSection>
-        <FlowchartTitle>What we’re looking for:</FlowchartTitle>
-        <FlowchartList>
-          <FlowchartItem>
-            7+ years of experience developing high traffic web applications{' '}
-          </FlowchartItem>
-          <FlowchartItem>Proficiency with docker and kubernetes</FlowchartItem>
-          <FlowchartItem>Experience writing unit tests</FlowchartItem>
-          <FlowchartItem>
-            Familiarity with at least one backend development language, like
-            Java or PHP
-          </FlowchartItem>
-          <FlowchartItem>Strong skills with React</FlowchartItem>
-        </FlowchartList>
-      </FlowchartSection>
-      <Section2>
-        <Section2Title>Why us?</Section2Title>
+      <motion.div
+        custom={0}
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <Section>
+          <Title>Fullstack Software Engineer</Title>
+          <Description>
+            We’re looking for an experienced jack-of-all-trades, comfortable
+            with backend and frontend development, and willing to be part of an
+            A+ team for whom software engineering is an art form.
+          </Description>
+        </Section>
+      </motion.div>
+      <motion.div
+        custom={1}
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <FlowchartSection>
+          <FlowchartTitle>What we’re looking for:</FlowchartTitle>
+          <FlowchartList>
+            <FlowchartItem>
+              7+ years of experience developing high traffic web applications{' '}
+            </FlowchartItem>
+            <FlowchartItem>
+              Proficiency with docker and kubernetes
+            </FlowchartItem>
+            <FlowchartItem>Experience writing unit tests</FlowchartItem>
+            <FlowchartItem>
+              Familiarity with at least one backend development language, like
+              Java or PHP
+            </FlowchartItem>
+            <FlowchartItem>Strong skills with React</FlowchartItem>
+          </FlowchartList>
+        </FlowchartSection>
+      </motion.div>
+      <motion.div
+        custom={2}
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <Section2>
+          <Section2Title>Why us?</Section2Title>
 
-        <JobDescription>
-          We believe that we can change the world by tackling difficult
-          problems, and we’ll learn a lot during the process. We value
-          excellence over velocity and we do not fear hard tasks. We believe in
-          building a great team before processes and bureaucracy.
-        </JobDescription>
-      </Section2>
-      <Footer />
+          <JobDescription>
+            We believe that we can change the world by tackling difficult
+            problems, and we’ll learn a lot during the process. We value
+            excellence over velocity and we do not fear hard tasks. We believe
+            in building a great team before processes and bureaucracy.
+          </JobDescription>
+        </Section2>
+      </motion.div>
+      <motion.div
+        custom={3}
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <Footer />
+      </motion.div>
     </PageContainer>
   );
 }
