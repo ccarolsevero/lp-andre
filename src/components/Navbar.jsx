@@ -1,10 +1,20 @@
 import styled from 'styled-components';
 import { FaBars } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 600 && open) {
+        setOpen(false);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [open]);
 
   return (
     <NavBarContainer $open={open}>
@@ -33,11 +43,33 @@ export default function Navbar() {
         <FaBars size={28} />
       </MenuIconArea>
       {open && (
-        <DropdownMenu $open={open}>
-          <MenuItem href="/#jobs" onClick={() => setOpen(false)}>
+        <DropdownMenu>
+          <MenuItem
+            href="/#jobs"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(false);
+              setTimeout(() => {
+                const el = document.getElementById('jobs');
+                if (el)
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
+            }}
+          >
             Jobs
           </MenuItem>
-          <MenuItem href="/#aboutus" onClick={() => setOpen(false)}>
+          <MenuItem
+            href="/#aboutus"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(false);
+              setTimeout(() => {
+                const el = document.getElementById('aboutus');
+                if (el)
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 100);
+            }}
+          >
             About Us
           </MenuItem>
         </DropdownMenu>
@@ -46,10 +78,10 @@ export default function Navbar() {
   );
 }
 
-const NavBarContainer = styled.nav`
+const NavBarContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 0 16px;
   height: 48px;
   background: #232222;
@@ -59,19 +91,6 @@ const NavBarContainer = styled.nav`
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: height 0.3s;
-  @media (max-width: 600px) {
-    padding: 0 4px;
-  }
-  @media (max-width: 500px) {
-    max-width: 100vw;
-    width: 100vw;
-    overflow-x: hidden;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-    height: 48px;
-  }
 `;
 
 const LogoArea = styled.div`

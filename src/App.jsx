@@ -183,6 +183,9 @@ const LogoImage = styled.img`
   height: auto;
   position: relative;
   z-index: 2;
+  @media (max-width: 600px) {
+    max-width: 180px;
+  }
 `;
 
 const BrainImage = styled.img`
@@ -298,11 +301,14 @@ const AboutSection = styled.section`
 `;
 
 const AboutTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #fff;
   margin-bottom: 24px;
   text-align: center;
+  @media (min-width: 800px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const AboutDescription = styled.p`
