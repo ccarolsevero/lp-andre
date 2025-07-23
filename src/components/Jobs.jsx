@@ -96,6 +96,7 @@ export default function Jobs() {
           </JobDescription>
         </Section2>
       </motion.div>
+      <ConnectionImage src="/assets/conection.png" alt="Connection" />
       <motion.div {...motionProps(1.8)}>
         <Footer />
       </motion.div>
@@ -127,9 +128,10 @@ const Section = styled.section`
 `;
 
 const Title = styled.h1`
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  margin-top: 50px;
   background: linear-gradient(180deg, #e0e0e0 0%, #8a8a8a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent !important;
@@ -138,13 +140,33 @@ const Title = styled.h1`
   width: 100%;
   display: inline-block;
   text-align: center;
+  white-space: normal;
+  @media (min-width: 600px) {
+    white-space: nowrap;
+  }
+  @media (min-width: 800px) {
+    font-size: 2.6rem;
+  }
+  @media (max-width: 500px) {
+    font-size: 1.5rem;
+    margin-top: 24px;
+  }
 `;
 
 const Description = styled.p`
   color: #8a8a8a;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  margin-bottom: 16px;
   max-width: 600px;
   text-align: center;
+  @media (min-width: 800px) {
+    font-size: 1.25rem;
+  }
+  @media (max-width: 500px) {
+    max-width: 98vw;
+    overflow-x: hidden;
+    word-break: break-word;
+  }
 `;
 
 const FlowchartSection = styled.section`
@@ -227,10 +249,18 @@ const JobTitle = styled.h2`
 
 const JobDescription = styled.p`
   color: #8a8a8a;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  margin-bottom: 16px;
   max-width: 600px;
   text-align: center;
-  margin-bottom: 18px;
+  @media (min-width: 800px) {
+    font-size: 1.25rem;
+  }
+  @media (max-width: 500px) {
+    max-width: 98vw;
+    overflow-x: hidden;
+    word-break: break-word;
+  }
 `;
 
 const SectionSubtitle = styled.h3`
@@ -238,4 +268,15 @@ const SectionSubtitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 600;
   margin: 18px 0 10px 0;
+`;
+
+const ConnectionImage = styled.img`
+  display: block;
+  margin: 40px auto 0 auto;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  @media (min-width: 800px) {
+    max-width: 420px;
+  }
 `;

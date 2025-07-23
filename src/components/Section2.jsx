@@ -42,6 +42,14 @@ export default function Section2() {
           )}
         </motion.div>
       ))}
+      <MotionChartImage
+        src="/assets/chart3d.png"
+        alt="3D Chart"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
+      />
     </Section2Container>
   );
 }
@@ -71,8 +79,21 @@ const Section2Description = styled.p`
   color: #8a8a8a;
   font-size: 1rem;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto 32px auto;
   @media (min-width: 800px) {
     font-size: 1.25rem;
   }
 `;
+
+const ChartImage = styled.img`
+  display: block;
+  margin: 32px auto 0 auto;
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  @media (min-width: 800px) {
+    max-width: 420px;
+  }
+`;
+
+const MotionChartImage = motion(ChartImage);

@@ -66,9 +66,9 @@ const SectionContainer = styled.section`
   background: #111;
   color: #eee;
   padding: 32px 8px 32px 8px;
-  margin-top: 48px;
+  margin-top: -2px;
   @media (min-width: 600px) {
-    margin-top: 0;
+    margin-top: -50px;
   }
   @media (min-width: 800px) {
     padding-top: 64px;

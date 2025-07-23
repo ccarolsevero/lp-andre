@@ -9,7 +9,11 @@ export default function Navbar() {
   return (
     <NavBarContainer $open={open}>
       <LogoArea as={Link} to="/">
-        LOGO
+        <img
+          src="/assets/logo_dcog.png"
+          alt="Logo"
+          style={{ height: '44px', width: 'auto', display: 'block' }}
+        />
       </LogoArea>
       <MenuLinks>
         <MenuItemLink as={Link} to="/about">
