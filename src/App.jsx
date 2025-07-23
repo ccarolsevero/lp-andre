@@ -5,7 +5,7 @@ import Section from './components/Section';
 import Section2 from './components/Section2';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 const fadeVariants = {
@@ -43,8 +43,21 @@ const aboutSectionVariants = {
 };
 
 export default function App() {
-  const [showConnection, setShowConnection] = useState(false);
-  const [showAboutUs, setShowAboutUs] = useState(false);
+  useEffect(() => {
+    function scrollToHashSection() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+    scrollToHashSection();
+    window.addEventListener('hashchange', scrollToHashSection);
+    return () => window.removeEventListener('hashchange', scrollToHashSection);
+  }, []);
+
   return (
     <AppContainer>
       <Navbar />
@@ -61,7 +74,7 @@ export default function App() {
       <Flowchart />
       <Section2 />
       {/* Conteúdo da vaga abaixo da Section2 */}
-      <JobSection>
+      <JobSection id="jobs">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -108,7 +121,6 @@ export default function App() {
           viewport={{ once: true, amount: 0.5 }}
           variants={fadeVariants}
           custom={1.2}
-          onAnimationComplete={() => setShowConnection(true)}
         >
           <JobSubtitle className="whyus">Why us?</JobSubtitle>
           <JobDescription>
@@ -119,46 +131,39 @@ export default function App() {
           </JobDescription>
         </motion.div>
       </JobSection>
-      <AnimatePresence>
-        {showConnection && (
-          <MotionConnectionImage
-            src="/assets/conection.png"
-            alt="Connection"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
-            onAnimationComplete={() => setShowAboutUs(true)}
-          />
-        )}
-      </AnimatePresence>
-      {showAboutUs && (
-        <AboutSection>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={aboutSectionVariants}
-            custom={0.2}
-          >
-            <AboutTitle>About Us</AboutTitle>
-          </motion.div>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={aboutSectionVariants}
-            custom={0.6}
-          >
-            <AboutDescription>
-              With a very talented team with a long track of successful projects
-              delivered across multiple industries, we believe we can change the
-              AI landscape by providing powerful tools to enable companies to
-              enter the AI era with truly impactful projects.
-            </AboutDescription>
-          </motion.div>
-        </AboutSection>
-      )}
+      <MotionConnectionImage
+        src="/assets/conection.png"
+        alt="Connection"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.7, ease: [0.4, 0.2, 0.2, 1] }}
+      />
+      <AboutSection id="aboutus">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={aboutSectionVariants}
+          custom={0.2}
+        >
+          <AboutTitle>About Us</AboutTitle>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={aboutSectionVariants}
+          custom={0.6}
+        >
+          <AboutDescription>
+            With a very talented team with a long track of successful projects
+            delivered across multiple industries, we believe we can change the
+            AI landscape by providing powerful tools to enable companies to
+            enter the AI era with truly impactful projects.
+          </AboutDescription>
+        </motion.div>
+      </AboutSection>
       <Footer />
     </AppContainer>
   );

@@ -30,9 +30,9 @@ const itemVariants = {
   }),
 };
 
-export default function Section({ onAnimationComplete }) {
+export default function Section({ onAnimationComplete, id }) {
   return (
-    <SectionContainer>
+    <SectionContainer id={id}>
       <Content>
         {items.map((item, idx) => (
           <motion.div

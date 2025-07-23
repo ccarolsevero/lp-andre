@@ -8,31 +8,37 @@ export default function Navbar() {
 
   return (
     <NavBarContainer $open={open}>
-      <LogoArea as={Link} to="/">
+      <LogoArea
+        as={Link}
+        to="/"
+        aria-label="Home"
+        onClick={(e) => {
+          e.preventDefault();
+          window.location.href = '/';
+          setOpen(false);
+        }}
+        style={{ cursor: 'pointer' }}
+      >
         <img
           src="/assets/logo_dcog.png"
-          alt="Logo"
+          alt="Logo da DCOG"
           style={{ height: '44px', width: 'auto', display: 'block' }}
         />
       </LogoArea>
       <MenuLinks>
-        <MenuItemLink as={Link} to="/about">
-          About Us
-        </MenuItemLink>
-        <MenuItemLink as={Link} to="/jobs">
-          Jobs
-        </MenuItemLink>
+        <MenuItemLink href="/#jobs">Jobs</MenuItemLink>
+        <MenuItemLink href="/#aboutus">About Us</MenuItemLink>
       </MenuLinks>
       <MenuIconArea onClick={() => setOpen((v) => !v)}>
         <FaBars size={28} />
       </MenuIconArea>
       {open && (
         <DropdownMenu $open={open}>
-          <MenuItem as={Link} to="/about" onClick={() => setOpen(false)}>
-            About Us
-          </MenuItem>
-          <MenuItem as={Link} to="/jobs" onClick={() => setOpen(false)}>
+          <MenuItem href="/#jobs" onClick={() => setOpen(false)}>
             Jobs
+          </MenuItem>
+          <MenuItem href="/#aboutus" onClick={() => setOpen(false)}>
+            About Us
           </MenuItem>
         </DropdownMenu>
       )}
